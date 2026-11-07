@@ -65,7 +65,15 @@ export default {
     // 复制并修改请求头
     const headers = new Headers(request.headers);
     headers.set('Host', targetHost);
-    headers.set('Referer', 'https://app-api.pixiv.net/');
+    let referer;
+    if (targetHost === PIXIV_IMAGE_HOST) {
+      referer = "https://www.pixiv.net/";
+    } else if (targetHost === PIXIV_OAUTH_HOST) {
+      referer = "https://accounts.pixiv.net/";
+    } else {
+      referer = "https://app-api.pixiv.net/";
+    }
+    headers.set("Referer", referer);
     headers.set('User-Agent', 'PixivIOSApp/7.13.3 (iOS 14.6; iPhone13,2)');
     headers.set('App-OS', 'ios');
     headers.set('App-OS-Version', '14.6');
